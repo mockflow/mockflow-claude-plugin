@@ -147,13 +147,22 @@ a component type unless you want a particular one. Follow ups work the same way:
 
 changes the board you already have rather than drawing a second one.
 
-One command exists, for when the connection misbehaves:
+Two commands exist. You will not normally need either.
+
+```
+/mockflow:draw a flowchart of the payment flow
+```
+
+Same as asking in plain English, but it removes any doubt. Typed this way, the
+result goes on the board and cannot come back as text in the terminal. Useful
+when you want certainty, or when a plain request produced a diagram in the
+terminal instead of on the board.
 
 ```
 /mockflow:connect
 ```
 
-It checks the bridge, the daemon and the board pairing, and tells you which one
+Checks the bridge, the daemon and the board pairing, and tells you which of them
 needs attention.
 
 ## What is in here
@@ -173,7 +182,8 @@ Inside the plugin:
 | `.mcp.json` | connects to the bridge through `bin/mockflow-connect` |
 | `bin/mockflow-connect` | resolves the bridge binary and hands over the stdio MCP connection |
 | `bin/mockflow-preflight` | session start check, silent when everything works |
-| `skills/draw` | the gaps the bridge's own tool instructions do not cover |
+| `skills/board-conventions` | how to use the board well, loads itself, never appears as a command |
+| `skills/draw` | the optional `/mockflow:draw` guarantee, only runs when typed |
 | `skills/connect` | pairing, status and troubleshooting |
 
 Component definitions are deliberately **not** in here. They are fetched live
