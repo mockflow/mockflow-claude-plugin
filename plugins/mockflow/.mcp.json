@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "mockflow": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/mockflow-connect"
+    }
+  }
+}

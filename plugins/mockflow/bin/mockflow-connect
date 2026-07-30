@@ -1,0 +1,21 @@
+#!/bin/sh
+# Hands this session's stdio MCP connection to the MockFlow bridge.
+#
+# Why this script exists at all: .mcp.json could name the bridge binary
+# directly, but plugin updates are user initiated, so the day that binary is
+# renamed every installed copy breaks with no way to push a fix. This launcher
+# is ours forever, so a rename is one word in BINARIES below.
+
+BINARIES="mockflow-bridge"
+
+for bin in $BINARIES; do
+	if command -v "$bin" >/dev/null 2>&1; then
+		exec "$bin" stdio
+	fi
+done
+
+# Nothing found. The message goes to stderr, where the MCP client logs it.
+# bin/mockflow-preflight is what actually tells the user, at session start.
+echo "mockflow: bridge helper not installed. Install it with:" >&2
+echo "  npm i -g @mockflow/mockflow-bridge" >&2
+exit 1

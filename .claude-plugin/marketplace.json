@@ -1,0 +1,14 @@
+{
+  "name": "mockflow",
+  "owner": {
+    "name": "MockFlow",
+    "url": "https://mockflow.com"
+  },
+  "plugins": [
+    {
+      "name": "mockflow",
+      "source": "./plugins/mockflow",
+      "description": "Draw diagrams, wireframes and mindmaps on a live MockFlow board from your own machine. Reads local files and code that never leave your computer."
+    }
+  ]
+}

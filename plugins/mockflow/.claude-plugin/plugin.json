@@ -1,0 +1,12 @@
+{
+  "name": "mockflow",
+  "description": "Draw diagrams, wireframes and mindmaps on a live MockFlow board from your own machine. Reads local files and code that never leave your computer.",
+  "version": "0.1.0",
+  "author": {
+    "name": "MockFlow",
+    "url": "https://mockflow.com"
+  },
+  "homepage": "https://mockflow.com",
+  "repository": "https://github.com/mockflow/mockflow-claude-plugin",
+  "license": "MIT"
+}
