@@ -1,5 +1,6 @@
 {
   "name": "mockflow",
+  "description": "Official MockFlow plugins for Claude Code. Brainstorm visually on a live MockFlow board from your own machine.",
   "owner": {
     "name": "MockFlow",
     "url": "https://mockflow.com"
