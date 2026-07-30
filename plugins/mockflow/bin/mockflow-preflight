@@ -49,13 +49,12 @@ async function main() {
 		const data = await resp.json();
 		boards = (data.boards || []).length;
 	} catch (e) {
-		// The daemon now starts itself when an agent session connects, so this is
-		// normal on a first run and not worth alarming anyone about. Only mention
-		// it as something to fall back on.
+		// Nothing answered, so no daemon is running. The bridge must be started by
+		// hand; this is the single most common reason board tools are missing.
 		say([
-			'The MockFlow bridge is installed but not currently running. It normally starts by',
-			'itself when needed. If board tools are missing from this session, the user can',
-			'start it manually with:  mockflow-bridge'
+			'The MockFlow bridge is installed but not running, so the board tools in this',
+			'session will not work. Tell the user to start it, then reload:',
+			'  mockflow-bridge'
 		]);
 	}
 
