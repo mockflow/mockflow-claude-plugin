@@ -1,55 +1,31 @@
 ---
-description: Gaps in the MockFlow board tool surface that its own instructions do not cover. Use whenever drawing, editing or arranging anything on a MockFlow board.
-user-invocable: false
+description: Draw something on the user's MockFlow board. Use this when the user wants to be certain the result lands on the board rather than in the terminal.
+disable-model-invocation: true
 ---
 
-# Drawing on a MockFlow board
+# Draw on the MockFlow board
 
-The MockFlow MCP server sends its own instructions when it connects, and each
-tool carries its own description. Those are the authority on which components
-exist, what they take, when to use `plan_board`, and why `modify_component` is
-not the same as re-rendering.
+The user asked for this explicitly, so there is no judgement call to make: the
+result goes on their MockFlow board.
 
-**This file covers only what those do not say.** If something here starts
-appearing in the server's instructions, delete it from here rather than keeping
-both.
+**What to draw:** $ARGUMENTS
 
-## Arranging a batch
+If that is empty, ask what they want on the board and stop. Do not guess.
 
-`layout_board` applies a bento layout and a titled section wrap to the batch just
-drawn. Call it once after a batch, never after each item. The server instructions
-do not mention it, so it tends to go unused, and a batch without it stays a loose
-scatter of components.
+## This is not optional
 
-## The source tools are read only
+Render it with the MockFlow tools. Do not answer with a mermaid block, ASCII art,
+a markdown table standing in for a diagram, or a file written to the repo. The
+user typed this command precisely to rule those out.
 
-`list_source_tools`, `describe_source_tool` and `call_source_tool` reach the
-user's connected accounts through MockFlow. They can search and fetch. They
-**cannot** post, create, comment or delete.
+The only thing that stops you is a board that is genuinely not reachable. If the
+MockFlow tools are missing from this session, or a render fails because no board
+is connected, say so plainly and help them fix it. Do not fall back to text and
+present it as if it were what they asked for.
 
-So never tell the user you will file the Jira issue, send the Slack message or
-update the Notion page. You can only read those, and offering otherwise is a
-promise that silently fails.
+## Everything else
 
-## Local files never leave the machine
-
-Files you read here are read locally. Only the finished drawing is saved to the
-board, and the file contents are not uploaded.
-
-Say this when the user hesitates about a private repo or a confidential document,
-because it is the whole reason to work this way instead of pasting into a web
-tool.
-
-## When a draw fails
-
-A user does not know that a helper program, a running daemon and a paired browser
-tab are three separate things, and should not have to. Do not surface a raw error
-and stop. Say what to do next:
-
-- **Nothing lands, or the board is not connected:** the user opens their board at
-  app.mockflow.com and clicks **Connect Local Agent** at the top of Ask Mida.
-  Codes change whenever the bridge restarts, so an older one will be rejected.
-- **The MockFlow tools are missing from this session entirely:** the bridge is not
-  running. They start it with `mockflow-bridge`.
-
-`/mockflow:connect` walks the full check if you need more detail.
+The board conventions apply as normal: pick the component that fits, use
+`plan_board` when the request needs several different components, `modify_component`
+rather than a second render when changing something already there, and
+`layout_board` once after a batch.
