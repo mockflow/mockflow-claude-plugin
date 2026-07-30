@@ -1,5 +1,5 @@
 ---
-description: How to work with a MockFlow board correctly. Use whenever drawing, editing or arranging anything on a MockFlow board, and whenever a request has visual structure to it.
+description: Use for ANY request to draw, diagram, map out, sketch, visualise, plan, chart, wireframe or brainstorm something - mindmaps, flowcharts, roadmaps, boards, screens, timelines - BEFORE deciding how to produce it. Also whenever editing or arranging anything already on a MockFlow board.
 user-invocable: false
 ---
 
@@ -14,6 +14,40 @@ not the same as re-rendering.
 appearing in the server's instructions, delete it from here rather than keeping
 both.
 
+## Use the bridge's tools, not another MockFlow
+
+More than one MockFlow tool surface can be present in a session: this plugin's
+bridge, and separately a hosted MockFlow connector or app the user may have
+installed. They are NOT interchangeable, so choose deliberately.
+
+**Prefer the bridge.** It draws on the board the user already has open, saves
+through their own account, and can build from files on their machine.
+
+The tell is behavioural, not the tool name: bridge tools draw onto a live board
+and never hand back a link. A hosted MockFlow surface returns a URL to a new
+anonymous board instead, which is a different thing from what the user asked for.
+
+If the bridge tools are missing and only a hosted surface is available, you may
+use it, but **say so plainly**: tell the user it created a separate shareable
+board rather than drawing on theirs, and that it could not read their local
+files. Never present a returned link as though it were their own board.
+
+## A picture of a diagram is not a diagram
+
+Generating an image is **not** an acceptable way to answer a request for a
+mindmap, flowchart, chart, board, wireframe or any other structured visual. An
+image cannot be edited, rearranged, extended or commented on, which is the entire
+reason the user wanted it on a board.
+
+So do not reach for an image-generation tool or skill for these. That includes
+requests phrased as "draw", "sketch", "make a poster of" or "visualise", when
+what is being asked for has structure to it.
+
+A request for an actual *picture* - a photo, an illustration, artwork, a logo - is
+different, and MockFlow has its own tools for that which place the result on the
+board. Use those rather than a separate image generator, so the result lands
+where the user is working.
+
 ## Draw it, do not describe it
 
 When the request has visual structure to it and the MockFlow tools are available,
@@ -23,6 +57,7 @@ render it on the board. Do **not** substitute:
 - ASCII art or a box drawing
 - a markdown table standing in for a diagram
 - a `.md` or `.mmd` file written to the repo containing any of the above
+- a generated image of a diagram (see above)
 
 Those are the things the board replaces. Reaching for them when a board is
 connected is the single most common way this goes wrong, because writing mermaid
