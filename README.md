@@ -74,48 +74,62 @@ work out the board conventions for itself. The plugin closes both gaps:
 
 ## Real world uses
 
-Very little of this is about code. Anything you would otherwise think through in
-a document, a whiteboard session or your head works here.
-
-**Thinking through a half formed idea.**
-> I am toying with a subscription tier for small teams, help me think it through visually
-
-Branches appear as you talk. Delete the ones that are wrong, keep going on the
-rest, and ask it to go deeper where it looks promising.
-
-**The meeting you just came out of.**
-> here is the transcript from this morning's planning call, turn it into a board of decisions, owners and open questions
-
-An hour of talking becomes something the people who missed it will actually read.
-
-**Research you have been collecting.**
-> read these interview notes and map where customers keep getting stuck
-
-The pattern across twenty conversations, laid out instead of remembered.
-
-**Planning a quarter.**
-> lay out the roadmap in goals.md, showing which workstreams depend on which
-
-**Weighing options before committing.**
-> compare the three vendors in vendors/ side by side on the criteria we care about
-
-**Anything with geography in it.**
-> map our accounts from customers.csv, then draw the three sales territories we are considering
-
-A real geocoded map, with your own regions drawn on top of it. The same works for
-store locations, delivery zones, event venues, market entry or a field team's
-coverage. Ask it to redraw a boundary and it moves.
+Most of it starts with something already on your machine, whether that is source
+code, config, notes or a transcript.
 
 **Getting your bearings in an unfamiliar codebase.**
 > make a mindmap of how the payments module is structured
 
 Drawn from the real source, not from a two year old wiki page.
 
-**Working from tools you already use.**
+**Architecture that matches what is deployed.**
+> draw the cloud architecture from our terraform in infra/
+
+Generated from the files that actually define the infrastructure, so it is
+correct on the day you draw it.
+
+**A schema you inherited.**
+> read the migrations in db/ and lay out the entity relationships
+
+Tables, keys and joins from the migrations rather than from guesswork.
+
+**Tracing a request across services.**
+> draw a swimlane of what happens between checkout and fulfilment
+
+Where the handoffs are, and where the retries hide.
+
+**Design review before anyone writes the screen.**
+> wireframe the notification settings screen from docs/notifications.md
+
+An editable wireframe on the board in under a minute, ready to mark up.
+
+**Incident review.**
+> build a timeline of what happened from these log excerpts
+
+The postmortem artifact exists before the meeting starts.
+
+**Sprint planning from the tools you already use.**
 > pull my open Jira tickets and lay them out as a kanban
 
 Connected sources are read through your MockFlow account, so there are no extra
 credentials and nothing leaves your control.
+
+**The meeting you just came out of.**
+> here is the transcript from this morning's planning call, turn it into a board of decisions, owners and open questions
+
+An hour of talking becomes something the people who missed it will actually read.
+
+**Thinking through a half formed idea.**
+> I am toying with a subscription tier for small teams, help me think it through visually
+
+Branches appear as you talk. Delete the ones that are wrong and ask it to go
+deeper on the rest.
+
+**Anything with geography in it.**
+> map our accounts from customers.csv, then draw the three sales territories we are considering
+
+A real geocoded map with your own regions drawn on top. The same works for store
+locations, delivery zones, venues, market entry or field coverage.
 
 ## Install
 
