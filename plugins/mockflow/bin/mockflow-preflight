@@ -1,54 +1,74 @@
-#!/bin/sh
-# SessionStart hook. Tells the user what MockFlow still needs, and nothing at all
-# when everything is already working.
-#
-# The user should never have to know that a helper, a daemon and a paired tab are
-# three separate things. This checks all three and reports only the first one
-# that is missing, in plain language.
-#
-# Silence when healthy is deliberate: this runs on every session start, so any
-# output in the normal case is pure noise.
+#!/usr/bin/env node
 
-# 1. Is the helper installed?
-if ! command -v mockflow-bridge >/dev/null 2>&1; then
-	if ! command -v node >/dev/null 2>&1; then
-		echo "MockFlow needs Node.js 18+ and its bridge helper, neither of which is installed."
-		echo "Tell the user Node.js comes from nodejs.org, then offer to install the helper:"
-		echo "  npm i -g @mockflow/mockflow-bridge"
-		exit 0
-	fi
-	echo "The MockFlow plugin is installed but its bridge helper is missing, so nothing can"
-	echo "be drawn on a board yet. It is a small local program, about 2MB, no account needed."
-	echo "Offer to run this for the user before doing anything else with MockFlow:"
-	echo "  npm i -g @mockflow/mockflow-bridge"
-	exit 0
-fi
+/**
+ * SessionStart check. Tells the user what MockFlow still needs, and nothing at
+ * all when everything already works.
+ *
+ * Node rather than sh so it runs on Windows too, and so it needs neither a
+ * POSIX shell nor curl. Node is a safe assumption: the bridge requires it.
+ *
+ * The user should never have to know that a helper program, a running daemon
+ * and a paired browser tab are three separate things. This reports only the
+ * first one that is missing, in plain language.
+ *
+ * Silence when healthy is deliberate: this runs on every session start, so any
+ * output in the normal case is pure noise.
+ */
 
-# 2 and 3. Daemon up, and any board paired? One call answers both.
-# node is guaranteed here: the bridge requires it, and the bridge is installed.
-# Prints "down" if nothing answers, otherwise the count of connected boards.
-BOARDS=$(node -e '
-const p = process.env.MFBRIDGE_PORT || 21196;
-fetch("http://127.0.0.1:" + p + "/status", { signal: AbortSignal.timeout(2000) })
-  .then(r => r.json())
-  .then(d => console.log(String((d.boards || []).length)))
-  .catch(() => console.log("down"));
-' 2>/dev/null)
+const { spawnSync } = require('child_process');
 
-if [ "$BOARDS" = "down" ] || [ -z "$BOARDS" ]; then
-	echo "The MockFlow bridge helper is installed but not running, so the board tools in this"
-	echo "session will not work. Tell the user to start it, then reload:"
-	echo "  mockflow-bridge"
-	exit 0
-fi
+const PORT = process.env.MFBRIDGE_PORT || 21196;
 
-if [ "$BOARDS" = "0" ]; then
-	echo "MockFlow is connected but no board is paired, so a drawing has nowhere to land."
-	echo "Before drawing anything, tell the user to open their board at app.mockflow.com,"
-	echo "click \"Connect Local Agent\" at the top of Ask Mida, and enter the pairing code"
-	echo "shown by the running bridge. This is a one time step per computer."
-	exit 0
-fi
+function say(lines) { console.log(lines.join('\n')); process.exit(0); }
 
-# Healthy. Say nothing.
-exit 0
+/** Is `mockflow-bridge` on PATH? `where` on Windows, `command -v` elsewhere. */
+function onPath(bin) {
+	const win = process.platform === 'win32';
+	const r = win
+		? spawnSync('where', [bin], { stdio: 'ignore', windowsHide: true })
+		: spawnSync('sh', ['-c', 'command -v ' + bin], { stdio: 'ignore' });
+	return r.status === 0;
+}
+
+async function main() {
+	// 1. Is the helper installed?
+	if (!onPath('mockflow-bridge')) {
+		say([
+			'The MockFlow plugin is installed but its bridge helper is missing, so nothing can',
+			'be drawn on a board yet. It is a small local program, about 2MB, no account needed.',
+			'Offer to run this for the user before doing anything else with MockFlow:',
+			'  npm i -g @mockflow/mockflow-bridge'
+		]);
+	}
+
+	// 2 and 3. Daemon up, and any board paired? One call answers both.
+	let boards = null;
+	try {
+		const resp = await fetch('http://127.0.0.1:' + PORT + '/status',
+			{ signal: AbortSignal.timeout(2000) });
+		const data = await resp.json();
+		boards = (data.boards || []).length;
+	} catch (e) {
+		// The daemon now starts itself when an agent session connects, so this is
+		// normal on a first run and not worth alarming anyone about. Only mention
+		// it as something to fall back on.
+		say([
+			'The MockFlow bridge is installed but not currently running. It normally starts by',
+			'itself when needed. If board tools are missing from this session, the user can',
+			'start it manually with:  mockflow-bridge'
+		]);
+	}
+
+	if (boards === 0) {
+		say([
+			'MockFlow is connected but no board is paired, so a drawing has nowhere to land.',
+			'Before drawing anything, tell the user to open their board at app.mockflow.com,',
+			'click "Connect Local Agent" at the top of Ask Mida, and enter the pairing code',
+			'shown by the bridge. This is a one time step per computer.'
+		]);
+	}
+
+	// Healthy. Say nothing.
+}
+
+main().catch(function() { process.exit(0); });
