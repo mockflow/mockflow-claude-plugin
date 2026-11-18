@@ -8,6 +8,7 @@
     "url": "https://mockflow.com"
   },
   "homepage": "https://mockflow.com",
+  "privacyPolicyUrl": "https://mockflow.com/legal/privacy",
   "repository": "https://github.com/mockflow/mockflow-claude-plugin",
   "license": "MIT",
   "keywords": [
