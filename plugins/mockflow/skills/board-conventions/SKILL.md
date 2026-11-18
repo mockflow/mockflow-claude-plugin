@@ -6,8 +6,8 @@ user-invocable: false
 # Working with MockFlow boards
 
 The MockFlow server sends its own instructions when it connects, and each tool
-carries its own description. Those are the authority on which components exist,
-what they take and when to use `plan_board`.
+carries its own description. Those are the authority on which components exist
+and what they take.
 
 **This file covers only what those do not say.** If something here starts
 appearing in the server's instructions, delete it from here rather than keeping
@@ -77,9 +77,9 @@ against the user's plan limits.
 
 ## Several items at once
 
-If the request needs several different components, follow the server's guidance
-on `plan_board`. If you rendered two or more items one by one without a plan,
-call `layout_board` once at the end, never after each item.
+If the request needs several different components (a launch plan as a kanban, a
+timeline and a checklist), create each with its own tool. Pass the board link
+from the first result as `projectUrl` on the rest, so they land on one board.
 
 ## Building from the user's files
 

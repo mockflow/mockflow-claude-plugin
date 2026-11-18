@@ -25,7 +25,6 @@ they asked for.
 
 ## Everything else
 
-The board conventions apply as normal: pick the component that fits, follow the
-server's guidance on `plan_board` when the request needs several different
-components, pass `projectUrl` when the user gave a board link, and give them the
-board link when it is done.
+The board conventions apply as normal: pick the component that fits, put several
+components on one board by passing `projectUrl`, and give the user the board
+link when it is done.
