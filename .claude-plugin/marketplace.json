@@ -1,6 +1,6 @@
 {
   "name": "mockflow",
-  "description": "Official MockFlow plugins for Claude Code. Brainstorm visually on a live MockFlow board from your own machine.",
+  "description": "Official MockFlow plugins for Claude. Create editable diagrams, wireframes and boards in your MockFlow account.",
   "owner": {
     "name": "MockFlow",
     "url": "https://mockflow.com"
@@ -9,7 +9,7 @@
     {
       "name": "mockflow",
       "source": "./plugins/mockflow",
-      "description": "Draw diagrams, wireframes and mindmaps on a live MockFlow board from your own machine. Reads local files and code that never leave your computer."
+      "description": "Create flowcharts, mindmaps, wireframes, charts, timelines, kanban boards and more as editable MockFlow boards, signed in with your MockFlow account."
     }
   ]
 }

@@ -1,7 +1,12 @@
 {
   "mcpServers": {
     "mockflow": {
-      "command": "${CLAUDE_PLUGIN_ROOT}/bin/mockflow-connect"
+      "type": "http",
+      "url": "https://app.mockflow.com/ideaboard/connector/mcp",
+      "oauth": {
+        "clientId": "mockflow-claude-code",
+        "callbackPort": 18195
+      }
     }
   }
 }
