@@ -1,5 +1,6 @@
 {
   "name": "mockflow",
+  "displayName": "MockFlow",
   "description": "Create flowcharts, mindmaps, wireframes, charts, timelines, kanban boards and more as editable MockFlow boards, signed in with your MockFlow account.",
   "version": "1.0.0",
   "icon": "./assets/icon.png",
@@ -9,6 +10,9 @@
   },
   "homepage": "https://mockflow.com",
   "privacyPolicyUrl": "https://mockflow.com/legal/privacy",
+  "termsOfServiceUrl": "https://mockflow.com/legal/terms",
+  "supportUrl": "https://mockflow.com/support",
+  "documentationUrl": "https://mockflow.com/docs/connect-mockflow-to-claude-or-chatgpt",
   "repository": "https://github.com/mockflow/mockflow-claude-plugin",
   "license": "MIT",
   "keywords": [
